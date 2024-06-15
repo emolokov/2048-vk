@@ -1,5 +1,6 @@
 import { Grid } from "./grid.js";
 import { Tile } from "./tile.js";
+import { ItcModal } from "./modal.js";
 
 const gameBoard = document.getElementById("game-board");
 
@@ -53,7 +54,14 @@ async function handleInput(event) {
 
   if (!canMoveUp() && !canMoveDown() && !canMoveLeft() && !canMoveRight()) {
     await newTile.waitForAnimationEnd()
-    alert("Try again!")
+    const modal = new ItcModal({
+      title: 'Вы проиграли',
+      content: '<div>Начать сначала?</div>',
+      footerButtons: [
+        { class: 'btn btn-ok', text: 'ОК', action: 'ok' }
+      ]
+    });
+    modal.show();
     return;
   }
 
