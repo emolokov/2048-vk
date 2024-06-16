@@ -42,6 +42,7 @@ export class Cell {
 
   mergeTiles() {
     this.linkedTile.setValue(this.linkedTile.value + this.linkedTileForMerge.value);
+    document.getElementById("score").innerText = Number(document.getElementById("score").innerText) + this.linkedTile.value;
     this.linkedTileForMerge.removeFromDOM();
     this.unlinkTileForMerge();
   }
