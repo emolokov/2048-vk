@@ -53,14 +53,14 @@
 
 
     document.getElementById("game-board").addEventListener('touchstart', (event) => {
-      var startX = event.touches[0].clientX;
-      var startY = event.touches[0].clientY;
+      var startX = event.target.clientX;
+      var startY = event.target.clientY;
 
     })
 
     document.getElementById("game-board").addEventListener('touchend', (event) => {
-      var endX = event.touches[0].clientX;
-      var endY = event.touches[0].clientY;
+      var endX = event.target.clientX;
+      var endY = event.target.clientY;
 
     })
 
