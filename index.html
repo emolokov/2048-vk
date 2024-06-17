@@ -77,9 +77,11 @@
 
       // Вычисляем, был ли свайп выполнен по горизонтали или вертикали
       if (Math.abs(xDiff) > Math.abs(yDiff)) {
-        console.log(xDiff > 0 ? alert("Свайп влево") : alert("Свайп вправо"));
+        const eventTouch = new KeyboardEvent('keydown', xDiff > 0 ? { keyCode: 37 } : { keyCode: 39 });
+        document.dispatchEvent(eventTouch);
       } else {
-        console.log(yDiff > 0 ? alert("Свайп вверх") : alert("Свайп вниз"));
+        const eventTouch = new KeyboardEvent('keydown', yDiff > 0 ? { keyCode: 38 } : { keyCode: 40 });
+        document.dispatchEvent(eventTouch);
       }
 
       // Обнуляем координатыhiuhhiugkji после распознавания свайпа
