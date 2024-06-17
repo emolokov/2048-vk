@@ -23,6 +23,42 @@ body {
   color: white;
 }
 
+#title-2048 {
+  position:absolute;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 7vmin;
+  font-weight: bold;
+  color:white;
+  width: 100%;
+  text-align: center;
+  top: -10vmin;
+  
+  
+}
+
+#gameover {
+  width: 100%;
+  position: absolute;
+  top: 35%;
+  display: flex;
+  justify-content: center;
+  visibility: hidden;
+}
+
+#gameover-overlay {
+  position: relative;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 5vmin;
+  font-weight: bold;
+  color: white;
+  width: 70%;
+  text-align: center;
+  background: rgba(104, 100, 105, 0.7);
+  z-index: 999;
+  border-radius: 3vmin;
+  padding-top: 10px;
+}
+
 #r-ov {
   width: 100%;
   position: absolute;
@@ -78,13 +114,13 @@ body {
 #game-board {
   --cell-size: 20vmin;
   --cell-gap: 2vmin;
-
   position: relative;
   display: grid;
   grid-template-columns: repeat(4, var(--cell-size));
   grid-template-rows: repeat(4, var(--cell-size));
   gap: var(--cell-gap);
   border-radius: 1vmin;
+  margin-top: 5%;
 }
 
 .cell {

@@ -12,6 +12,10 @@ function setupInputOnce() {
   window.addEventListener("keydown", handleInput, { once: true });
 }
 
+function gameOver() {
+  document.getElementById("gameover").style.setProperty("visibility", "visible");
+}
+
 async function handleInput(event) {
   switch (event.key) {
     case "ArrowUp":
@@ -52,7 +56,10 @@ async function handleInput(event) {
 
   if (!canMoveUp() && !canMoveDown() && !canMoveLeft() && !canMoveRight()) {
     await newTile.waitForAnimationEnd();
+    /*Insert gameover*/
+    gameOver();
     return;
+    
   }
 
   setupInputOnce();
