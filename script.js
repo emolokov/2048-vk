@@ -20,6 +20,7 @@ function gameOver() {
 async function handleInput(event) {
   switch (event.detail.move) {
     case "up":
+      alert("up");
       if (!canMoveUp()) {
         setupInputOnce();
         return;
@@ -27,6 +28,7 @@ async function handleInput(event) {
       await moveUp();
       break;
     case "down":
+      alert("down");
       if (!canMoveDown()) {
         setupInputOnce();
         return;
@@ -34,6 +36,7 @@ async function handleInput(event) {
       await moveDown();
       break;
     case "left":
+      alert("left");
       if (!canMoveLeft()) {
         setupInputOnce();
         return;
@@ -41,6 +44,7 @@ async function handleInput(event) {
       await moveLeft();
       break;
     case "right":
+      alert("right");
       if (!canMoveRight()) {
         setupInputOnce();
         return;
