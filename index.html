@@ -52,6 +52,54 @@
     }
 
 
+    async function handleInput(event) {
+      switch (event.key) {
+        case "ArrowUp":
+          if (!canMoveUp()) {
+            setupInputOnce();
+            return;
+          }
+          await moveUp();
+          break;
+        case "ArrowDown":
+          if (!canMoveDown()) {
+            setupInputOnce();
+            return;
+          }
+          await moveDown();
+          break;
+        case "ArrowLeft":
+          if (!canMoveLeft()) {
+            setupInputOnce();
+            return;
+          }
+          await moveLeft();
+          break;
+        case "ArrowRight":
+          if (!canMoveRight()) {
+            setupInputOnce();
+            return;
+          }
+          await moveRight();
+          break;
+        default:
+          setupInputOnce();
+          return;
+      }
+      const newTile = new Tile(gameBoard);
+      grid.getRandomEmptyCell().linkTile(newTile);
+
+      if (!canMoveUp() && !canMoveDown() && !canMoveLeft() && !canMoveRight()) {
+        await newTile.waitForAnimationEnd();
+        /*Insert gameover*/
+        gameOver();
+        return;
+
+      }
+
+      setupInputOnce();
+    }
+
     // Устанавливаем основные события прикосновения
     document.getElementById("game-board").addEventListener("touchstart", handleTouchStart, false);
     document.getElementById("game-board").addEventListener("touchmove", handleTouchMove, false);
@@ -63,6 +111,8 @@
       const { clientX, clientY } = evt.touches[0];
       xDown = clientX; yDown = clientY;
     }
+
+
 
     // Отслеживаем движение пальца и определяем направление свайпа
     function handleTouchMove(evt) {
@@ -77,11 +127,9 @@
 
       // Вычисляем, был ли свайп выполнен по горизонтали или вертикали
       if (Math.abs(xDiff) > Math.abs(yDiff)) {
-        const eventTouch = new KeyboardEvent('keydown', xDiff > 0 ? { keyCode: 37 } : { keyCode: 39 });
-        window.dispatchEvent(eventTouch);
+        xDiff > 0 ? touchVector("left") : touchVector("right");
       } else {
-        const eventTouch = new KeyboardEvent('keydown', yDiff > 0 ? { keyCode: 38 } : { keyCode: 40 });
-        window.dispatchEvent(eventTouch);
+        yDiff > 0 ? touchVector("up") : touchVector("down");
       }
 
       // Обнуляем координатыhiuhhiugkji после распознавания свайпа
