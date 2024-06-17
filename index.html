@@ -52,22 +52,38 @@
     }
 
 
-    document.getElementById("game-board").addEventListener('touchstart', (event) => {
-      var startX = event.target.clientX;
-      var startY = event.target.clientY;
+    // Устанавливаем основные события прикосновения
+    document.getElementById("game-board").addEventListener("touchstart", handleTouchStart, false);
+    document.getElementById("game-board").addEventListener("touchmove", handleTouchMove, false);
 
-    })
+    let xDown = null, yDown = null;
 
-    document.getElementById("game-board").addEventListener('touchend', (event) => {
-      var endX = event.target.clientX;
-      var endY = event.target.clientY;
+    // Фиксируем изначальные координаты прикосновения
+    function handleTouchStart(evt) {
+      const { clientX, clientY } = evt.touches[0];
+      xDown = clientX; yDown = clientY;
+    }
 
-    })
+    // Отслеживаем движение пальца и определяем направление свайпа
+    function handleTouchMove(evt) {
+      if (!xDown || !yDown) {
+        return; // Если изначальные координаты не зафиксированы, прекращаем выполнение
+      }
 
-    if (endX > startX) {
-      alert('Вправо')
-      startX = null;
-      endX = null;
+      const { clientX, clientY } = evt.touches[0];
+
+      const xDiff = xDown - clientX;
+      const yDiff = yDown - clientY;
+
+      // Вычисляем, был ли свайп выполнен по горизонтали или вертикали
+      if (Math.abs(xDiff) > Math.abs(yDiff)) {
+        console.log(xDiff > 0 ? alert("Свайп влево") : alert("Свайп вправо"));
+      } else {
+        console.log(yDiff > 0 ? alert("Свайп вверх") : alert("Свайп вниз"));
+      }
+
+      // Обнуляем координаты после распознавания свайпа
+      xDown = yDown = null;
     }
 
 
