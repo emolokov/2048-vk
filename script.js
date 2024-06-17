@@ -34,9 +34,9 @@ function handleTouchMove(evt) {
 
   // Вычисляем, был ли свайп выполнен по горизонтали или вертикали
   if (Math.abs(xDiff) > Math.abs(yDiff)) {
-    xDiff > 0 ? window.dispatchEvent(new CustomEvent("vector", { detail: { move: "left" } })) : window.dispatchEvent(new CustomEvent("vector", { detail: { move: "right" } }));
+    xDiff > 0 ? document.getElementById("game-board").dispatchEvent(new CustomEvent("vector", { detail: { move: "left" } })) : document.getElementById("game-board").dispatchEvent(new CustomEvent("vector", { detail: { move: "right" } }));
   } else {
-    yDiff > 0 ? window.dispatchEvent(new CustomEvent("vector", { detail: { move: "up" } })) : window.dispatchEvent(new CustomEvent("vector", { detail: { move: "down" } }));
+    yDiff > 0 ? document.getElementById("game-board").dispatchEvent(new CustomEvent("vector", { detail: { move: "up" } })) : document.getElementById("game-board").dispatchEvent(new CustomEvent("vector", { detail: { move: "down" } }));
   }
 
   // Обнуляем координатыhiuhhiugkji после распознавания свайпа
@@ -44,8 +44,8 @@ function handleTouchMove(evt) {
 }
 
 function setupInputOnce() {
-  window.addEventListener("keydown", handleInput, { once: true });
-  window.addEventListener("vector", vectorInput());
+  document.getElementById("game-board").addEventListener("keydown", handleInput, { once: true });
+  document.getElementById("game-board").addEventListener("vector", function (e) { var vmove = e.detail.move; vectorInput(vmove) }, { once: true });
 }
 
 function gameOver() {
@@ -101,36 +101,42 @@ async function handleInput(event) {
   setupInputOnce();
 }
 
-async function vectorInput(event) {
-  switch (event.detail.move) {
+async function vectorInput(vmove) {
+
+  switch (vmove) {
     case "up":
       if (!canMoveUp()) {
         setupInputOnce();
-        alert("rabotaet ubl");
         return;
       }
       moveUp();
       break;
     case "down":
+
       if (!canMoveDown()) {
         setupInputOnce();
         return;
       }
       moveDown();
+
       break;
     case "left":
+
       if (!canMoveLeft()) {
         setupInputOnce();
         return;
       }
       moveLeft();
+
       break;
     case "right":
+
       if (!canMoveRight()) {
         setupInputOnce();
         return;
       }
       await moveRight();
+
       break;
     default:
       setupInputOnce();
