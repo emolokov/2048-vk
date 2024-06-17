@@ -80,9 +80,9 @@
 
       // Вычисляем, был ли свайп выполнен по горизонтали или вертикали
       if (Math.abs(xDiff) > Math.abs(yDiff)) {
-        xDiff > 0 ? window.dispatchEvent(new Vector("left")) : window.dispatchEvent(new Vector("right"));
+        xDiff > 0 ? window.dispatchEvent(new CustomEvent("vector", { detail: {move: "left"}})) : window.dispatchEvent(new CustomEvent("vector", { detail: {move: "right"}}));
       } else {
-        yDiff > 0 ? window.dispatchEvent(new Vector("up")) : window.dispatchEvent(new Vector("down"));
+        yDiff > 0 ? window.dispatchEvent(new CustomEvent("vector", { detail: {move: "up"}})) : window.dispatchEvent(new CustomEvent("vector", { detail: {move: "down"}}));
       }
 
       // Обнуляем координатыhiuhhiugkji после распознавания свайпа

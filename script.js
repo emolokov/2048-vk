@@ -10,7 +10,7 @@ setupInputOnce();
 
 function setupInputOnce() {
   window.addEventListener("keydown", handleInput, { once: true });
-  window.addEventListener("Vector", vectorInput);
+  window.addEventListener("vector", vectorInput);
 }
 
 function gameOver() {
@@ -18,30 +18,29 @@ function gameOver() {
 }
 
 async function handleInput(event) {
-  switch (event.key) {
-    case "ArrowUp":
+  switch (event.detail.move) {
+    case "up":
       if (!canMoveUp()) {
         setupInputOnce();
-        alert("rabotaet ubl");
         return;
       }
       await moveUp();
       break;
-    case "ArrowDown":
+    case "down":
       if (!canMoveDown()) {
         setupInputOnce();
         return;
       }
       await moveDown();
       break;
-    case "ArrowLeft":
+    case "left":
       if (!canMoveLeft()) {
         setupInputOnce();
         return;
       }
       await moveLeft();
       break;
-    case "ArrowRight":
+    case "right":
       if (!canMoveRight()) {
         setupInputOnce();
         return;
