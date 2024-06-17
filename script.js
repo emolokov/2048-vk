@@ -13,15 +13,15 @@ document.getElementById("game-board").addEventListener("touchmove", handleTouchM
 
 let xDown = null, yDown = null;
 
-    // Фиксируем изначальные координаты прикосновения
+// Фиксируем изначальные координаты прикосновения
 function handleTouchStart(evt) {
-    const { clientX, clientY } = evt.touches[0];
-    xDown = clientX; yDown = clientY;
-    }
+  const { clientX, clientY } = evt.touches[0];
+  xDown = clientX; yDown = clientY;
+}
 
 
 
-    // Отслеживаем движение пальца и определяем направление свайпа
+// Отслеживаем движение пальца и определяем направление свайпа
 function handleTouchMove(evt) {
   if (!xDown || !yDown) {
     return; // Если изначальные координаты не зафиксированы, прекращаем выполнение
@@ -32,20 +32,20 @@ function handleTouchMove(evt) {
   const xDiff = xDown - clientX;
   const yDiff = yDown - clientY;
 
-      // Вычисляем, был ли свайп выполнен по горизонтали или вертикали
+  // Вычисляем, был ли свайп выполнен по горизонтали или вертикали
   if (Math.abs(xDiff) > Math.abs(yDiff)) {
-    xDiff > 0 ? window.dispatchEvent(new CustomEvent("vector", { detail: {move: "left"}})) : window.dispatchEvent(new CustomEvent("vector", { detail: {move: "right"}}));
+    xDiff > 0 ? window.dispatchEvent(new CustomEvent("vector", { detail: { move: "left" } })) : window.dispatchEvent(new CustomEvent("vector", { detail: { move: "right" } }));
   } else {
-    yDiff > 0 ? window.dispatchEvent(new CustomEvent("vector", { detail: {move: "up"}})) : window.dispatchEvent(new CustomEvent("vector", { detail: {move: "down"}}));
+    yDiff > 0 ? window.dispatchEvent(new CustomEvent("vector", { detail: { move: "up" } })) : window.dispatchEvent(new CustomEvent("vector", { detail: { move: "down" } }));
   }
 
-      // Обнуляем координатыhiuhhiugkji после распознавания свайпа
+  // Обнуляем координатыhiuhhiugkji после распознавания свайпа
   xDown = yDown = null;
-  }
+}
 
 function setupInputOnce() {
   window.addEventListener("keydown", handleInput, { once: true });
-  window.addEventListener("vector", vectorInput);
+  window.addEventListener("vector", vectorInput());
 }
 
 function gameOver() {
@@ -105,7 +105,7 @@ async function handleInput(event) {
   setupInputOnce();
 }
 
-async function vectorInput(e) {
+function vectorInput(e) {
   switch (e) {
     case "up":
       if (!canMoveUp()) {
@@ -113,23 +113,23 @@ async function vectorInput(e) {
         alert("rabotaet ubl");
         return;
       }
-      await moveUp();
+      moveUp();
       break;
     case "down":
       if (!canMoveDown()) {
         setupInputOnce();
         return;
       }
-      await moveDown();
+      moveDown();
       break;
     case "left":
       if (!canMoveLeft()) {
         setupInputOnce();
         return;
       }
-      await moveLeft();
+      moveLeft();
       break;
-    case "right":
+      case "right":
       if (!canMoveRight()) {
         setupInputOnce();
         return;
