@@ -51,10 +51,24 @@
       location.reload();
     }
 
-    
+
     document.addEventListener('touchstart', (event) => {
-      alert(event.targetTouches[0].clientX, event.targetTouches[0].clientY);
+      var startX = event.touches[0].clientX;
+      var startY = event.touches[0].clientY;
+
     })
+
+    document.addEventListener('touchend', (event) => {
+      var endX = event.touches[0].clientX;
+      var endY = event.touches[0].clientY;
+
+    })
+
+    if (endX > startX) {
+      alert('Вправо')
+      startX = null;
+      endX = null;
+    }
 
 
   </script>
