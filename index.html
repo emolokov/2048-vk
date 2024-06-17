@@ -50,6 +50,10 @@
       document.getElementById("refresh-overlay").style.setProperty("visibility", "hidden");
       location.reload();
     }
+
+    document.getElementById("game-board").addEventListener('touchstart', (event) => {
+      alert('Вы приложили палец к элементу')
+    })
   </script>
 </body>
 
