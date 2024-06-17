@@ -44,7 +44,7 @@ function handleTouchMove(evt) {
 }
 
 function setupInputOnce() {
-  document.getElementById("game-board").addEventListener("keydown", handleInput, { once: true });
+  window.addEventListener("keydown", handleInput, { once: true });
   document.getElementById("game-board").addEventListener("vector", (e) => { var vmove = e.detail.move; vectorInput(vmove) }, { once: true });
 }
 

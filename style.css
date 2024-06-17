@@ -24,16 +24,16 @@ body {
 }
 
 #title-2048 {
-  position:absolute;
+  position: absolute;
   font-family: Arial, Helvetica, sans-serif;
   font-size: 7vmin;
   font-weight: bold;
-  color:white;
+  color: white;
   width: 100%;
   text-align: center;
   top: -10vmin;
-  
-  
+
+
 }
 
 #gameover {
@@ -57,6 +57,14 @@ body {
   z-index: 999;
   border-radius: 3vmin;
   padding-top: 10px;
+  padding-bottom: 5px;
+}
+
+#gameover-refresh {
+  cursor: pointer;
+  width: 20px;
+  position: relative;
+  text-align: center;
 }
 
 #r-ov {
