@@ -52,13 +52,13 @@
     }
 
 
-    document.addEventListener('touchstart', (event) => {
+    document.getElementById("game-board").addEventListener('touchstart', (event) => {
       var startX = event.touches[0].clientX;
       var startY = event.touches[0].clientY;
 
     })
 
-    document.addEventListener('touchend', (event) => {
+    document.getElementById("game-board").addEventListener('touchend', (event) => {
       var endX = event.touches[0].clientX;
       var endY = event.touches[0].clientY;
 
