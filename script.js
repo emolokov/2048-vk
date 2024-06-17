@@ -10,6 +10,7 @@ grid.getRandomEmptyCell().linkTile(new Tile(gameBoard));
 setupInputOnce();
 
 
+
 function setupInputOnce() {
   window.addEventListener("keydown", handleInput, { once: true });
 }
