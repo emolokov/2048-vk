@@ -53,33 +53,29 @@ function gameOver() {
 }
 
 async function handleInput(event) {
-  switch (event.detail.move) {
-    case "up":
-      alert("up");
+  switch (event.key) {
+    case "ArrowUp":
       if (!canMoveUp()) {
         setupInputOnce();
         return;
       }
       await moveUp();
       break;
-    case "down":
-      alert("down");
+    case "ArrowDown":
       if (!canMoveDown()) {
         setupInputOnce();
         return;
       }
       await moveDown();
       break;
-    case "left":
-      alert("left");
+    case "ArrowLeft":
       if (!canMoveLeft()) {
         setupInputOnce();
         return;
       }
       await moveLeft();
       break;
-    case "right":
-      alert("right");
+    case "ArrowRight":
       if (!canMoveRight()) {
         setupInputOnce();
         return;
@@ -105,8 +101,8 @@ async function handleInput(event) {
   setupInputOnce();
 }
 
-function vectorInput(e) {
-  switch (e) {
+async function vectorInput(event) {
+  switch (event.detail.move) {
     case "up":
       if (!canMoveUp()) {
         setupInputOnce();
@@ -129,7 +125,7 @@ function vectorInput(e) {
       }
       moveLeft();
       break;
-      case "right":
+    case "right":
       if (!canMoveRight()) {
         setupInputOnce();
         return;
