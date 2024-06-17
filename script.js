@@ -10,6 +10,7 @@ setupInputOnce();
 
 function setupInputOnce() {
   window.addEventListener("keydown", handleInput, { once: true });
+  window.addEventListener("Vector", vectorInput);
 }
 
 function gameOver() {
@@ -21,6 +22,7 @@ async function handleInput(event) {
     case "ArrowUp":
       if (!canMoveUp()) {
         setupInputOnce();
+        alert("rabotaet ubl");
         return;
       }
       await moveUp();
@@ -59,7 +61,57 @@ async function handleInput(event) {
     /*Insert gameover*/
     gameOver();
     return;
-    
+
+  }
+
+  setupInputOnce();
+}
+
+async function vectorInput(event) {
+  switch (event) {
+    case "up":
+      if (!canMoveUp()) {
+        setupInputOnce();
+        alert("rabotaet ubl");
+        return;
+      }
+      await moveUp();
+      break;
+    case "down":
+      if (!canMoveDown()) {
+        setupInputOnce();
+        return;
+      }
+      await moveDown();
+      break;
+    case "left":
+      if (!canMoveLeft()) {
+        setupInputOnce();
+        return;
+      }
+      await moveLeft();
+      break;
+    case "right":
+      if (!canMoveRight()) {
+        setupInputOnce();
+        return;
+      }
+      await moveRight();
+      break;
+    default:
+      setupInputOnce();
+      return;
+  }
+
+  const newTile = new Tile(gameBoard);
+  grid.getRandomEmptyCell().linkTile(newTile);
+
+  if (!canMoveUp() && !canMoveDown() && !canMoveLeft() && !canMoveRight()) {
+    await newTile.waitForAnimationEnd();
+    /*Insert gameover*/
+    gameOver();
+    return;
+
   }
 
   setupInputOnce();
