@@ -95,7 +95,6 @@ async function handleInput(event) {
     /*Insert gameover*/
     gameOver();
     return;
-
   }
 
   setupInputOnce();
@@ -118,7 +117,6 @@ async function vectorInput(vmove) {
         return;
       }
       moveDown();
-
       break;
     case "left":
 
@@ -127,7 +125,6 @@ async function vectorInput(vmove) {
         return;
       }
       moveLeft();
-
       break;
     case "right":
 
@@ -136,7 +133,6 @@ async function vectorInput(vmove) {
         return;
       }
       await moveRight();
-
       break;
     default:
       setupInputOnce();
