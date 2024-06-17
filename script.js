@@ -8,6 +8,41 @@ grid.getRandomEmptyCell().linkTile(new Tile(gameBoard));
 grid.getRandomEmptyCell().linkTile(new Tile(gameBoard));
 setupInputOnce();
 
+document.getElementById("game-board").addEventListener("touchstart", handleTouchStart, false);
+document.getElementById("game-board").addEventListener("touchmove", handleTouchMove, false);
+
+let xDown = null, yDown = null;
+
+    // Фиксируем изначальные координаты прикосновения
+function handleTouchStart(evt) {
+    const { clientX, clientY } = evt.touches[0];
+    xDown = clientX; yDown = clientY;
+    }
+
+
+
+    // Отслеживаем движение пальца и определяем направление свайпа
+function handleTouchMove(evt) {
+  if (!xDown || !yDown) {
+    return; // Если изначальные координаты не зафиксированы, прекращаем выполнение
+  }
+
+  const { clientX, clientY } = evt.touches[0];
+
+  const xDiff = xDown - clientX;
+  const yDiff = yDown - clientY;
+
+      // Вычисляем, был ли свайп выполнен по горизонтали или вертикали
+  if (Math.abs(xDiff) > Math.abs(yDiff)) {
+    xDiff > 0 ? window.dispatchEvent(new CustomEvent("vector", { detail: {move: "left"}})) : window.dispatchEvent(new CustomEvent("vector", { detail: {move: "right"}}));
+  } else {
+    yDiff > 0 ? window.dispatchEvent(new CustomEvent("vector", { detail: {move: "up"}})) : window.dispatchEvent(new CustomEvent("vector", { detail: {move: "down"}}));
+  }
+
+      // Обнуляем координатыhiuhhiugkji после распознавания свайпа
+  xDown = yDown = null;
+  }
+
 function setupInputOnce() {
   window.addEventListener("keydown", handleInput, { once: true });
   window.addEventListener("vector", vectorInput);
