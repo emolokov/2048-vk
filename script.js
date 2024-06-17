@@ -1,6 +1,5 @@
 import { Grid } from "./grid.js";
 import { Tile } from "./tile.js";
-import { ItcModal } from "./modal.js";
 
 const gameBoard = document.getElementById("game-board");
 
@@ -8,8 +7,6 @@ const grid = new Grid(gameBoard);
 grid.getRandomEmptyCell().linkTile(new Tile(gameBoard));
 grid.getRandomEmptyCell().linkTile(new Tile(gameBoard));
 setupInputOnce();
-
-
 
 function setupInputOnce() {
   window.addEventListener("keydown", handleInput, { once: true });
@@ -54,15 +51,7 @@ async function handleInput(event) {
   grid.getRandomEmptyCell().linkTile(newTile);
 
   if (!canMoveUp() && !canMoveDown() && !canMoveLeft() && !canMoveRight()) {
-    await newTile.waitForAnimationEnd()
-    const modal = new ItcModal({
-      title: 'Вы проиграли',
-      content: '<div>Начать сначала?</div>',
-      footerButtons: [
-        { class: 'btn btn-ok', text: 'ОК', action: 'ok' }
-      ]
-    });
-    modal.show();
+    await newTile.waitForAnimationEnd();
     return;
   }
 

@@ -7,19 +7,19 @@
   <link type="Image/x-icon" href="./favicon.ico" rel="icon">
   <title>2048</title>
   <link rel="stylesheet" href="./style.css">
-  <link rel="stylesheet" href="modal.css">
   <script src="./script.js" type="module"></script>
-  <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
 
 <body>
 
   <div id="game-board">
-    <div id="refresh-overlay">
-      <div>Начать заново?</div>
-      <div id = "refresh-overlay-buttons">
-        <div class="refresh-overlay-buttons-button">Да</div>
-        <div>Нет</div>
+    <div id = "r-ov">
+      <div id="refresh-overlay">
+        <div>Начать заново?</div>
+        <div id="refresh-overlay-buttons">
+          <div class="refresh-overlay-buttons-button" id="refresh-button-yes" onclick=refreshButtonYes();>Да</div>
+          <div class="refresh-overlay-buttons-button" id="refresh-button-no" onclick=refreshButtonNo();>Нет</div>
+        </div>
       </div>
     </div>
     <div id="score-div">
@@ -29,10 +29,19 @@
     <div id="refresh" onclick="refreshGame()">
       <img src="refresh.png" alt="">
     </div>
-    
+
   </div>
   <script type="text/javascript">
     function refreshGame() {
+      document.getElementById("refresh-overlay").style.setProperty("visibility", "visible");
+    }
+
+    function refreshButtonNo() {
+      document.getElementById("refresh-overlay").style.setProperty("visibility", "hidden");
+    }
+
+    function refreshButtonYes() {
+      document.getElementById("refresh-overlay").style.setProperty("visibility", "hidden");
       location.reload();
     }
   </script>
