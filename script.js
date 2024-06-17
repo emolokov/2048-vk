@@ -70,8 +70,8 @@ async function handleInput(event) {
   setupInputOnce();
 }
 
-async function vectorInput(event) {
-  switch (event) {
+async function vectorInput(e) {
+  switch (e) {
     case "up":
       if (!canMoveUp()) {
         setupInputOnce();
