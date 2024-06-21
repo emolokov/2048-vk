@@ -41,7 +41,7 @@
       <div class="button-bar-buttons" onclick="refreshGame()">
         <img src="refresh.png" alt="">
       </div>
-      
+
     </div>
 
   </div>
@@ -57,6 +57,19 @@
     function refreshButtonYes() {
       document.getElementById("refresh-overlay").style.setProperty("visibility", "hidden");
       location.reload();
+    }
+
+    function addfav() {
+      bridge.send('VKWebAppAddToFavorites')
+        .then((data) => {
+          if (data.result) {
+            // Мини-приложение или игра добавлены в избранное
+          }
+        })
+        .catch((error) => {
+          // Ошибка
+          console.log(error);
+        });
     }
 
 
