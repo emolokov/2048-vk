@@ -120,6 +120,11 @@ body {
   cursor: pointer;
 }
 
+#addfav {
+  position: relative;
+  left: 0;
+  bottom: 0;
+}
 
 #game-board {
   --cell-size: 20vmin;
