@@ -35,8 +35,8 @@
       <div id="score">0</div>
     </div>
     <div id="button-bar">
-      <div class="button-bar-buttons" id="addfav-button">
-        <img src=" fstar.png" alt="">
+      <div class="button-bar-buttons" onclick="addfav()">
+        <img src="fstar.png" alt="">
       </div>
       <div class="button-bar-buttons" onclick="refreshGame()">
         <img src="refresh.png" alt="">
@@ -59,21 +59,21 @@
       location.reload();
     }
 
-    // function addfav() {
-    //   vkBridge.send('VKWebAppAddToFavorites')
-    //     .then((data) => {
-    //       if (data.result) {
-    //         console.log("Игра добавлена в избранное");
-    //         // Мини-приложение или игра добавлены в избранное
-    //       }
-    //     })
-    //     .catch((error) => {
-    //       console.log("Игра не добавлена в избранное");
+    function addfav() {
+      vkBridge.send('VKWebAppAddToFavorites')
+        .then((data) => {
+          if (data.result) {
+            console.log("Игра добавлена в избранное");
+            // Мини-приложение или игра добавлены в избранное
+          }
+        })
+        .catch((error) => {
+          console.log("Игра не добавлена в избранное");
 
-    //       // Ошибка
-    //       console.log(error);
-    //     });
-    // }
+          // Ошибка
+          console.log(error);
+        });
+    }
 
 
 
