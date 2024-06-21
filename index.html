@@ -35,6 +35,9 @@
       <div id="score">0</div>
     </div>
     <div id="button-bar">
+      <div class="button-bar-buttons" onclick="liderboardShow()">
+        <img src="lidboard.png" alt="">
+      </div>
       <div class="button-bar-buttons" onclick="addfav()">
         <img src="fstar.png" alt="">
       </div>
@@ -46,6 +49,20 @@
 
   </div>
   <script type="text/javascript">
+    function liderboardShow() {
+      vkBridge.send("VKWebAppShowLeaderBoardBox", {
+  user_result: 100
+  })
+  .then( (data) => {
+    if (data.success) {
+        // Диалоговое окно было показано
+        // ...
+    }
+  })
+  .catch( (error) => {
+    console.log(error); // Ошибка
+  });
+    }
     function addfav() {
       vkBridge.send('VKWebAppAddToFavorites')
         .then((data) => {
@@ -70,7 +87,24 @@
       document.getElementById("refresh-overlay").style.setProperty("visibility", "hidden");
     }
 
+    function showReklama() {
+  vkBridge.send('VKWebAppShowNativeAds', {
+    ad_format: 'interstitial' /* Тип рекламы */
+  })
+    .then((data) => {
+      if (data.result) {
+        console.log("Реклама была показана");
+      } else {
+          console.log("Ошибка: Реклама небыла показана");
+        // Ошибка
+      }
+    })
+    .catch((error) => { console.log(error); });
+}
+
+
     function refreshButtonYes() {
+      showReklama();
       document.getElementById("refresh-overlay").style.setProperty("visibility", "hidden");
       location.reload();
     }

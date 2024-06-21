@@ -22,8 +22,21 @@ function handleTouchStart(evt) {
   xDown = clientX; yDown = clientY;
 }
 
-
-
+function checkReklama() {
+  vkBridge.send('VKWebAppCheckNativeAds', {
+    ad_format: 'reward' /* Тип рекламы */
+  })
+    .then((data) => {
+      if (data.result) {
+        console.log("Есть реклама для показа!!");
+      } else {
+        console.log("Нет рекламы для показа!!");
+        // Материалов нет
+      }
+    })
+    .catch((error) => { console.log(error); });
+}
+checkReklama();
 // Отслеживаем движение пальца и определяем направление свайпа
 function handleTouchMove(evt) {
   if (!xDown || !yDown) {
