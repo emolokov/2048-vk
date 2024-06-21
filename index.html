@@ -63,10 +63,13 @@
       bridge.send('VKWebAppAddToFavorites')
         .then((data) => {
           if (data.result) {
+            console.log("Игра добавлена в избранное");
             // Мини-приложение или игра добавлены в избранное
           }
         })
         .catch((error) => {
+          console.log("Игра не добавлена в избранное");
+
           // Ошибка
           console.log(error);
         });
