@@ -55,6 +55,24 @@ function gameOver() {
   document.getElementById("gameover").style.setProperty("visibility", "visible");
 }
 
+function addfav() {
+  vkBridge.send('VKWebAppAddToFavorites')
+    .then((data) => {
+      if (data.result) {
+        console.log("Игра добавлена в избранное");
+        // Мини-приложение или игра добавлены в избранное
+      }
+    })
+    .catch((error) => {
+      console.log("Игра не добавлена в избранное");
+
+      // Ошибка
+      console.log(error);
+    });
+}
+
+document.getElementById("addfav-button").onclick(addfav());
+
 async function handleInput(event) {
   switch (event.key) {
     case "ArrowUp":
