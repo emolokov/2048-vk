@@ -1,5 +1,11 @@
+
+import bridge from '@vkontakte/vk-bridge';
 import { Grid } from "./grid.js";
 import { Tile } from "./tile.js";
+
+
+// Отправляет событие инициализации нативному клиенту
+bridge.send("VKWebAppInit");
 
 const gameBoard = document.getElementById("game-board");
 
