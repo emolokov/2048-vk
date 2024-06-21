@@ -71,7 +71,7 @@ function addfav() {
     });
 }
 
-document.getElementById("addfav-button").setAttribute("onclick", "addfav()");
+document.getElementById("addfav-button").onclick = function () { addfav(); };
 
 async function handleInput(event) {
   switch (event.key) {
