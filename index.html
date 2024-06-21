@@ -60,7 +60,7 @@
     }
 
     function addfav() {
-      bridge.send('VKWebAppAddToFavorites')
+      vkBridge.send('VKWebAppAddToFavorites')
         .then((data) => {
           if (data.result) {
             console.log("Игра добавлена в избранное");
