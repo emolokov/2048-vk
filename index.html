@@ -46,19 +46,6 @@
 
   </div>
   <script type="text/javascript">
-    function refreshGame() {
-      document.getElementById("refresh-overlay").style.setProperty("visibility", "visible");
-    }
-
-    function refreshButtonNo() {
-      document.getElementById("refresh-overlay").style.setProperty("visibility", "hidden");
-    }
-
-    function refreshButtonYes() {
-      document.getElementById("refresh-overlay").style.setProperty("visibility", "hidden");
-      location.reload();
-    }
-
     function addfav() {
       vkBridge.send('VKWebAppAddToFavorites')
         .then((data) => {
@@ -74,6 +61,21 @@
           console.log(error);
         });
     }
+
+    function refreshGame() {
+      document.getElementById("refresh-overlay").style.setProperty("visibility", "visible");
+    }
+
+    function refreshButtonNo() {
+      document.getElementById("refresh-overlay").style.setProperty("visibility", "hidden");
+    }
+
+    function refreshButtonYes() {
+      document.getElementById("refresh-overlay").style.setProperty("visibility", "hidden");
+      location.reload();
+    }
+
+
 
 
 
