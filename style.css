@@ -32,8 +32,6 @@ body {
   width: 100%;
   text-align: center;
   top: -10vmin;
-
-
 }
 
 #gameover {
@@ -66,7 +64,6 @@ body {
   width: 20px;
   position: relative;
   display: inline;
-
 }
 
 #r-ov {
@@ -121,6 +118,50 @@ body {
   padding: 3px;
 }
 
+#play {
+  position: absolute;
+  visibility: visible;
+  background-color: #444;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 7.5vmin;
+  font-weight: bold;
+  display: flex;
+  height: 100%;
+  width: 100%;
+  z-index: 9999;
+  justify-content: center;
+  align-items: center;
+}
+
+#button-play {
+  position: flex;
+  cursor: pointer;
+  border-radius: 1vmin;
+  width: 100px;
+  height: 100px;
+  background: #e27412;
+}
+
+#button-play:hover {
+  transform: scale(1.1);
+}
+
+#triangle {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+#triangle-play {
+  transform: scale(0.6);
+  border-top: 60px solid transparent;
+  border-left: 120px solid white;
+  border-bottom: 60px solid transparent;
+  margin-left: 5px;
+}
 
 #game-board {
   --cell-size: 20vmin;
@@ -155,7 +196,6 @@ body {
   background-color: hsl(25, 60%, var(--bg-lightness));
   color: hsl(20, 25%, var(--text-lightness));
   animation: show 200ms;
-  transition: 100ms;
 }
 
 @keyframes show {

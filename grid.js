@@ -13,13 +13,17 @@ export class Grid {
     }
 
     this.cellsGroupedByColumn = this.groupCellsByColumn();
-    this.cellsGroupedByReversedColumn = this.cellsGroupedByColumn.map(column => [...column].reverse());
+    this.cellsGroupedByReversedColumn = this.cellsGroupedByColumn.map(
+      (column) => [...column].reverse()
+    );
     this.cellsGroupedByRow = this.groupCellsByRow();
-    this.cellsGroupedByReversedRow = this.cellsGroupedByRow.map(raw => [...raw].reverse());
+    this.cellsGroupedByReversedRow = this.cellsGroupedByRow.map((raw) =>
+      [...raw].reverse()
+    );
   }
 
   getRandomEmptyCell() {
-    const emptyCells = this.cells.filter(cell => cell.isEmpty());
+    const emptyCells = this.cells.filter((cell) => cell.isEmpty());
     const randomIndex = Math.floor(Math.random() * emptyCells.length);
     return emptyCells[randomIndex];
   }

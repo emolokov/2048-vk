@@ -41,9 +41,23 @@ export class Cell {
   }
 
   mergeTiles() {
-    this.linkedTile.setValue(this.linkedTile.value + this.linkedTileForMerge.value);
-    document.getElementById("score").innerText = Number(document.getElementById("score").innerText) + this.linkedTile.value;
+    this.linkedTile.setValue(
+      this.linkedTile.value + this.linkedTileForMerge.value
+    );
+    document.getElementById("score").textContent =
+      Number(document.getElementById("score").textContent) +
+      this.linkedTile.value;
     this.linkedTileForMerge.removeFromDOM();
     this.unlinkTileForMerge();
+    // var t = 0;
+    // document.querySelector("#record").textContent = t;
+    if (
+      Number(document.querySelector("#record").textContent) <
+      Number(document.querySelector("#score").textContent)
+    ) {
+      document.querySelector("#record").textContent =
+        document.querySelector("#score").textContent;
+      // t = document.querySelector("#score").textContent;
+    }
   }
 }

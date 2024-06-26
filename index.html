@@ -1,123 +1,192 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link type="Image/x-icon" href="./favicon.ico" rel="icon" />
+    <title>2048</title>
+    <link rel="stylesheet" href="./style.css" />
+    <script src="./script.js" type="module"></script>
+    <script src="https://unpkg.com/@vkontakte/vk-bridge/dist/browser.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  </head>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link type="Image/x-icon" href="./favicon.ico" rel="icon">
-  <title>2048</title>
-  <link rel="stylesheet" href="./style.css">
-  <script src="./script.js" type="module"></script>
-  <script src="https://unpkg.com/@vkontakte/vk-bridge/dist/browser.min.js"></script>
-</head>
-
-<body>
-
-  <div id="game-board">
-    <div id="title-2048">2048</div>
-    <div id="gameover">
-      <div id="gameover-overlay">
-        <div>Ходов больше нет!</div>
-        <div id="gameover-refresh" onclick="location.reload();"><img src="refresh.png" alt=""></div>
-      </div>
-    </div>
-    <div id="r-ov">
-      <div id="refresh-overlay">
-        <div>Начать заново?</div>
-        <div id="refresh-overlay-buttons">
-          <div class="refresh-overlay-buttons-button" id="refresh-button-yes" onclick=refreshButtonYes();>Да</div>
-          <div class="refresh-overlay-buttons-button" id="refresh-button-no" onclick=refreshButtonNo();>Нет</div>
+  <body>
+    <div id="play">
+      <div
+        id="button-play"
+        onclick="document.querySelector('#play').style.setProperty('visibility','hidden')">
+        <div id="triangle">
+          <div id="triangle-play"></div>
         </div>
       </div>
     </div>
-    <div id="score-div">
-      <div>Счет:&nbsp;</div>
-      <div id="score">0</div>
+    <div id="game-board">
+      <div id="title-2048"></div>
+      <div id="gameover">
+        <div id="gameover-overlay">
+          <div>Ходов больше нет!</div>
+          <div id="gameover-refresh" onclick="gameoverRefresh()">
+            <img src="refresh.png" alt="" />
+          </div>
+        </div>
+      </div>
+      <div id="r-ov">
+        <div id="refresh-overlay">
+          <div>Начать заново?</div>
+          <div id="refresh-overlay-buttons">
+            <div
+              class="refresh-overlay-buttons-button"
+              id="refresh-button-yes"
+              onclick="refreshButtonYes();"
+            >
+              Да
+            </div>
+            <div
+              class="refresh-overlay-buttons-button"
+              id="refresh-button-no"
+              onclick="refreshButtonNo();"
+            >
+              Нет
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="score-div">
+        <div>Очки:&nbsp;</div>
+        <div id="score">0</div>
+        <div>&nbsp;&nbsp;</div>
+        <div>Рекорд:&nbsp;</div>
+        <div id="record">0</div>
+      </div>
+      <div id="button-bar">
+        <div class="button-bar-buttons" onclick="liderboardShow()">
+          <img src="lidboard.png" alt="" />
+        </div>
+        <div class="button-bar-buttons" onclick="addfav()">
+          <img src="fstar.png" alt="" />
+        </div>
+        <div class="button-bar-buttons" onclick="refreshGame()">
+          <img src="refresh.png" alt="" />
+        </div>
+      </div>
     </div>
-    <div id="button-bar">
-      <div class="button-bar-buttons" onclick="liderboardShow()">
-        <img src="lidboard.png" alt="">
-      </div>
-      <div class="button-bar-buttons" onclick="addfav()">
-        <img src="fstar.png" alt="">
-      </div>
-      <div class="button-bar-buttons" onclick="refreshGame()">
-        <img src="refresh.png" alt="">
-      </div>
+    <script type="text/javascript">
+      getRecord();
 
-    </div>
-
-  </div>
-  <script type="text/javascript">
-    function liderboardShow() {
-      vkBridge.send("VKWebAppShowLeaderBoardBox", {
-  user_result: 100
-  })
-  .then( (data) => {
-    if (data.success) {
-        // Диалоговое окно было показано
-        // ...
-    }
-  })
-  .catch( (error) => {
-    console.log(error); // Ошибка
-  });
-    }
-    function addfav() {
-      vkBridge.send('VKWebAppAddToFavorites')
-        .then((data) => {
-          if (data.result) {
-            console.log("Игра добавлена в избранное");
-            // Мини-приложение или игра добавлены в избранное
-          }
-        })
-        .catch((error) => {
-          console.log("Игра не добавлена в избранное");
-
-          // Ошибка
-          console.log(error);
-        });
-    }
-
-    function refreshGame() {
-      document.getElementById("refresh-overlay").style.setProperty("visibility", "visible");
-    }
-
-    function refreshButtonNo() {
-      document.getElementById("refresh-overlay").style.setProperty("visibility", "hidden");
-    }
-
-    function showReklama() {
-  vkBridge.send('VKWebAppShowNativeAds', {
-    ad_format: 'interstitial' /* Тип рекламы */
-  })
-    .then((data) => {
-      if (data.result) {
-        console.log("Реклама была показана");
-      } else {
-          console.log("Ошибка: Реклама небыла показана");
-        // Ошибка
+      function sendScoreSet() {
+        vkBridge
+          .send("VKWebAppStorageSet", {
+            key: "record",
+            value: document.querySelector("#record").textContent,
+          })
+          .then((data) => {
+            if (data.result) {
+              console.log(JSON.stringify(data.result));
+            }
+          })
+          .catch((error) => {
+            // Ошибка
+            console.log("сенд" + error);
+          });
       }
-    })
-    .catch((error) => { console.log(error); });
-}
 
+      function getRecord() {
+        vkBridge
+          .send("VKWebAppStorageGet", {
+            keys: ["record"],
+          })
+          .then((data) => {
+            if (data.keys) {
+              console.log("ГЕТ --" + JSON.stringify(data.keys[0].value));
+              document.querySelector("#record").textContent = JSON.stringify(
+                Number(data.keys[0].value)
+              );
+            }
+          })
+          .catch((error) => {
+            // Ошибка
+            console.log(error);
+          });
+      }
+      function gameoverRefresh() {
+        sendScoreSet();
+        showReklama();
+        location.reload();
+      }
+      function liderboardShow() {
+        vkBridge
+          .send("VKWebAppShowLeaderBoardBox", {
+            user_result: Number(document.getElementById("record").textContent),
+          })
+          .then((data) => {
+            if (data.success) {
+              // Диалоговое окно было показано
+              // ...
+            }
+          })
+          .catch((error) => {
+            console.log(error); // Ошибка
+          });
+      }
+      function addfav() {
+        vkBridge
+          .send("VKWebAppAddToFavorites")
+          .then((data) => {
+            if (data.result) {
+              console.log("Игра добавлена в избранное");
+              // Мини-приложение или игра добавлены в избранное
+            }
+          })
+          .catch((error) => {
+            console.log("Игра не добавлена в избранное");
 
-    function refreshButtonYes() {
-      showReklama();
-      document.getElementById("refresh-overlay").style.setProperty("visibility", "hidden");
-      location.reload();
-    }
+            // Ошибка
+            console.log(error);
+          });
+      }
 
+      function refreshGame() {
+        sendScoreSet();
+        document
+          .getElementById("refresh-overlay")
+          .style.setProperty("visibility", "visible");
+      }
 
+      function refreshButtonNo() {
+        document
+          .getElementById("refresh-overlay")
+          .style.setProperty("visibility", "hidden");
+      }
 
+      function showReklama() {
+        vkBridge
+          .send("VKWebAppShowNativeAds", {
+            ad_format: "interstitial" /* Тип рекламы */,
+          })
+          .then((data) => {
+            if (data.result) {
+              console.log("Реклама была показана");
+            } else {
+              console.log("Ошибка: Реклама небыла показана");
+              // Ошибка
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
 
+      function refreshButtonYes() {
+        showReklama();
+        document
+          .getElementById("refresh-overlay")
+          .style.setProperty("visibility", "hidden");
+        location.reload();
+      }
 
-    // Устанавливаем основные события прикосновения
-
-
-
-  </script>
-</body>
-
+      // Устанавливаем основные события прикосновения
+    </script>
+  </body>
 </html>

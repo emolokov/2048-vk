@@ -1,7 +1,6 @@
 import { Grid } from "./grid.js";
 import { Tile } from "./tile.js";
 
-
 // Отправляет событие инициализации нативному клиенту
 vkBridge.send("VKWebAppInit", {});
 const gameBoard = document.getElementById("game-board");
@@ -11,21 +10,28 @@ grid.getRandomEmptyCell().linkTile(new Tile(gameBoard));
 grid.getRandomEmptyCell().linkTile(new Tile(gameBoard));
 setupInputOnce();
 
-document.getElementById("game-board").addEventListener("touchstart", handleTouchStart, false);
-document.getElementById("game-board").addEventListener("touchmove", handleTouchMove, false);
+document
+  .getElementById("game-board")
+  .addEventListener("touchstart", handleTouchStart, false);
+document
+  .getElementById("game-board")
+  .addEventListener("touchmove", handleTouchMove, false);
 
-let xDown = null, yDown = null;
+let xDown = null,
+  yDown = null;
 
 // Фиксируем изначальные координаты прикосновения
 function handleTouchStart(evt) {
   const { clientX, clientY } = evt.touches[0];
-  xDown = clientX; yDown = clientY;
+  xDown = clientX;
+  yDown = clientY;
 }
 
 function checkReklama() {
-  vkBridge.send('VKWebAppCheckNativeAds', {
-    ad_format: 'reward' /* Тип рекламы */
-  })
+  vkBridge
+    .send("VKWebAppCheckNativeAds", {
+      ad_format: "reward" /* Тип рекламы */,
+    })
     .then((data) => {
       if (data.result) {
         console.log("Есть реклама для показа!!");
@@ -34,7 +40,9 @@ function checkReklama() {
         // Материалов нет
       }
     })
-    .catch((error) => { console.log(error); });
+    .catch((error) => {
+      console.log(error);
+    });
 }
 checkReklama();
 // Отслеживаем движение пальца и определяем направление свайпа
@@ -50,9 +58,27 @@ function handleTouchMove(evt) {
 
   // Вычисляем, был ли свайп выполнен по горизонтали или вертикали
   if (Math.abs(xDiff) > Math.abs(yDiff)) {
-    xDiff > 0 ? document.getElementById("game-board").dispatchEvent(new CustomEvent("vector", { detail: { move: "left" } })) : document.getElementById("game-board").dispatchEvent(new CustomEvent("vector", { detail: { move: "right" } }));
+    xDiff > 0
+      ? document
+          .getElementById("game-board")
+          .dispatchEvent(
+            new CustomEvent("vector", { detail: { move: "left" } })
+          )
+      : document
+          .getElementById("game-board")
+          .dispatchEvent(
+            new CustomEvent("vector", { detail: { move: "right" } })
+          );
   } else {
-    yDiff > 0 ? document.getElementById("game-board").dispatchEvent(new CustomEvent("vector", { detail: { move: "up" } })) : document.getElementById("game-board").dispatchEvent(new CustomEvent("vector", { detail: { move: "down" } }));
+    yDiff > 0
+      ? document
+          .getElementById("game-board")
+          .dispatchEvent(new CustomEvent("vector", { detail: { move: "up" } }))
+      : document
+          .getElementById("game-board")
+          .dispatchEvent(
+            new CustomEvent("vector", { detail: { move: "down" } })
+          );
   }
 
   // Обнуляем координатыhiuhhiugkji после распознавания свайпа
@@ -61,11 +87,20 @@ function handleTouchMove(evt) {
 
 function setupInputOnce() {
   window.addEventListener("keydown", handleInput, { once: true });
-  document.getElementById("game-board").addEventListener("vector", (e) => { var vmove = e.detail.move; vectorInput(vmove) }, { once: true });
+  document.getElementById("game-board").addEventListener(
+    "vector",
+    (e) => {
+      var vmove = e.detail.move;
+      vectorInput(vmove);
+    },
+    { once: true }
+  );
 }
 
 function gameOver() {
-  document.getElementById("gameover").style.setProperty("visibility", "visible");
+  document
+    .getElementById("gameover")
+    .style.setProperty("visibility", "visible");
 }
 
 async function handleInput(event) {
@@ -73,6 +108,7 @@ async function handleInput(event) {
     case "ArrowUp":
       if (!canMoveUp()) {
         setupInputOnce();
+
         return;
       }
       await moveUp();
@@ -80,6 +116,7 @@ async function handleInput(event) {
     case "ArrowDown":
       if (!canMoveDown()) {
         setupInputOnce();
+
         return;
       }
       await moveDown();
@@ -87,6 +124,7 @@ async function handleInput(event) {
     case "ArrowLeft":
       if (!canMoveLeft()) {
         setupInputOnce();
+
         return;
       }
       await moveLeft();
@@ -94,12 +132,14 @@ async function handleInput(event) {
     case "ArrowRight":
       if (!canMoveRight()) {
         setupInputOnce();
+
         return;
       }
       await moveRight();
       break;
     default:
       setupInputOnce();
+
       return;
   }
 
@@ -117,41 +157,42 @@ async function handleInput(event) {
 }
 
 async function vectorInput(vmove) {
-
   switch (vmove) {
     case "up":
       if (!canMoveUp()) {
         setupInputOnce();
+
         return;
       }
       moveUp();
       break;
     case "down":
-
       if (!canMoveDown()) {
         setupInputOnce();
+
         return;
       }
       moveDown();
       break;
     case "left":
-
       if (!canMoveLeft()) {
         setupInputOnce();
+
         return;
       }
       moveLeft();
       break;
     case "right":
-
       if (!canMoveRight()) {
         setupInputOnce();
+
         return;
       }
       await moveRight();
       break;
     default:
       setupInputOnce();
+
       return;
   }
 
@@ -163,7 +204,6 @@ async function vectorInput(vmove) {
     /*Insert gameover*/
     gameOver();
     return;
-
   }
 
   setupInputOnce();
@@ -188,11 +228,11 @@ async function moveRight() {
 async function slideTiles(groupedCells) {
   const promises = [];
 
-  groupedCells.forEach(group => slideTilesInGroup(group, promises));
+  groupedCells.forEach((group) => slideTilesInGroup(group, promises));
 
   await Promise.all(promises);
-  grid.cells.forEach(cell => {
-    cell.hasTileForMerge() && cell.mergeTiles()
+  grid.cells.forEach((cell) => {
+    cell.hasTileForMerge() && cell.mergeTiles();
   });
 }
 
@@ -244,7 +284,7 @@ function canMoveRight() {
 }
 
 function canMove(groupedCells) {
-  return groupedCells.some(group => canMoveInGroup(group));
+  return groupedCells.some((group) => canMoveInGroup(group));
 }
 
 function canMoveInGroup(group) {
