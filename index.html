@@ -8,19 +8,20 @@
     <link rel="stylesheet" href="./style.css" />
     <script src="./script.js" type="module"></script>
     <script src="https://unpkg.com/@vkontakte/vk-bridge/dist/browser.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    
   </head>
 
   <body>
-    <div id="play">
+    <!-- <div id="play">
       <div
         id="button-play"
-        onclick="document.querySelector('#play').style.setProperty('visibility','hidden')">
+        onclick="document.querySelector('#play').style.setProperty('visibility','hidden')"
+      >
         <div id="triangle">
           <div id="triangle-play"></div>
         </div>
       </div>
-    </div>
+    </div> -->
     <div id="game-board">
       <div id="title-2048"></div>
       <div id="gameover">
@@ -99,7 +100,6 @@
           })
           .then((data) => {
             if (data.keys) {
-              console.log("ГЕТ --" + JSON.stringify(data.keys[0].value));
               document.querySelector("#record").textContent = JSON.stringify(
                 Number(data.keys[0].value)
               );
