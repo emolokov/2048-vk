@@ -70,7 +70,7 @@ function handleTouchMove(evt) {
 
 function setupInputOnce() {
   window.addEventListener("keydown", handleInput, { once: true });
-  document.getElementById("game-board").addEventListener(
+  window.addEventListener(
     "vector",
     (e) => {
       var vmove = e.detail.move;
@@ -89,9 +89,7 @@ function gameOver() {
 async function handleInput(event) {
   switch (event.key) {
     case "ArrowUp":
-      console.log("Up");
       if (!canMoveUp()) {
-        console.log("No Up");
         setupInputOnce();
 
         return;
@@ -101,18 +99,15 @@ async function handleInput(event) {
       break;
     case "ArrowDown":
       if (!canMoveDown()) {
-        console.log("No Down");
         setupInputOnce();
 
         return;
       }
       await moveDown();
-      console.log("Down");
+
       break;
     case "ArrowLeft":
-      console.log("Left");
       if (!canMoveLeft()) {
-        console.log("No Left");
         setupInputOnce();
 
         return;
@@ -122,13 +117,12 @@ async function handleInput(event) {
       break;
     case "ArrowRight":
       if (!canMoveRight()) {
-        console.log("No Right");
         setupInputOnce();
 
         return;
       }
       await moveRight();
-      console.log("Right");
+
       break;
     default:
       setupInputOnce();
@@ -261,40 +255,43 @@ function slideTilesInGroup(group, promises) {
 }
 
 function canMoveUp() {
+  console.log(canMoveUp);
   return canMove(grid.cellsGroupedByColumn);
 }
 
 function canMoveDown() {
+  console.log(canMoveDown);
   return canMove(grid.cellsGroupedByReversedColumn);
 }
 
 function canMoveLeft() {
+  console.log(canMoveLeft);
   return canMove(grid.cellsGroupedByRow);
 }
 
 function canMoveRight() {
+  console.log(canMoveRight);
   return canMove(grid.cellsGroupedByReversedRow);
 }
 
 function canMove(groupedCells) {
-  console.log("canMove");
+  console.log(canMove);
   return groupedCells.some((group) => canMoveInGroup(group));
 }
 
 function canMoveInGroup(group) {
+  console.log(canMoveInGroup);
   return group.some((cell, index) => {
     if (index === 0) {
-      console.log("canMoveInGroup index===0");
       return false;
     }
 
     if (cell.isEmpty()) {
-      console.log("canMoveInGroup cell.isEmpty");
       return false;
     }
 
     const targetCell = group[index - 1];
-    console.log("canMoveInGroup canAccept");
+
     return targetCell.canAccept(cell.linkedTile);
   });
 }
