@@ -27,23 +27,6 @@ function handleTouchStart(evt) {
   yDown = clientY;
 }
 
-function checkReklama() {
-  vkBridge
-    .send("VKWebAppCheckNativeAds", {
-      ad_format: "reward" /* Тип рекламы */,
-    })
-    .then((data) => {
-      if (data.result) {
-        console.log("Есть реклама для показа!!");
-      } else {
-        console.log("Нет рекламы для показа!!");
-        // Материалов нет
-      }
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-}
 checkReklama();
 // Отслеживаем движение пальца и определяем направление свайпа
 function handleTouchMove(evt) {
@@ -106,36 +89,46 @@ function gameOver() {
 async function handleInput(event) {
   switch (event.key) {
     case "ArrowUp":
+      console.log("Up");
       if (!canMoveUp()) {
+        console.log("No Up");
         setupInputOnce();
 
         return;
       }
       await moveUp();
+
       break;
     case "ArrowDown":
       if (!canMoveDown()) {
+        console.log("No Down");
         setupInputOnce();
 
         return;
       }
       await moveDown();
+      console.log("Down");
       break;
     case "ArrowLeft":
+      console.log("Left");
       if (!canMoveLeft()) {
+        console.log("No Left");
         setupInputOnce();
 
         return;
       }
       await moveLeft();
+
       break;
     case "ArrowRight":
       if (!canMoveRight()) {
+        console.log("No Right");
         setupInputOnce();
 
         return;
       }
       await moveRight();
+      console.log("Right");
       break;
     default:
       setupInputOnce();
@@ -284,20 +277,24 @@ function canMoveRight() {
 }
 
 function canMove(groupedCells) {
+  console.log("canMove");
   return groupedCells.some((group) => canMoveInGroup(group));
 }
 
 function canMoveInGroup(group) {
   return group.some((cell, index) => {
     if (index === 0) {
+      console.log("canMoveInGroup index===0");
       return false;
     }
 
     if (cell.isEmpty()) {
+      console.log("canMoveInGroup cell.isEmpty");
       return false;
     }
 
     const targetCell = group[index - 1];
+    console.log("canMoveInGroup canAccept");
     return targetCell.canAccept(cell.linkedTile);
   });
 }

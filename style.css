@@ -121,25 +121,39 @@ body {
 #play {
   position: absolute;
   visibility: visible;
-  background-color: #444;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 7.5vmin;
-  font-weight: bold;
-  display: flex;
-  height: 100%;
-  width: 100%;
+  height: 50vmin;
+  width: 60vmin;
   z-index: 9999;
+  border-radius: 1vmin;
+  display: flexbox;
+  margin: auto;
   justify-content: center;
-  align-items: center;
+}
+
+#play-text {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 3vmin;
+  font-weight: bold;
+  width: 50vmin;
+  justify-content: center;
+  text-align: center;
+  background-color: #918585;
+  color: white;
+  z-index: 99999;
+  border-radius: 1vmin;
+  margin: 10% auto 5%;
+  border-radius: 1vmin;
+  border-style: solid;
+  border-color: #e27412;
 }
 
 #button-play {
-  position: flex;
   cursor: pointer;
   border-radius: 1vmin;
   width: 100px;
   height: 100px;
   background: #e27412;
+  margin: 10% auto;
 }
 
 #button-play:hover {
@@ -164,6 +178,7 @@ body {
 }
 
 #game-board {
+  opacity: 10%;
   --cell-size: 20vmin;
   --cell-gap: 2vmin;
   position: relative;

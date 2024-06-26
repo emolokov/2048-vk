@@ -8,20 +8,20 @@
     <link rel="stylesheet" href="./style.css" />
     <script src="./script.js" type="module"></script>
     <script src="https://unpkg.com/@vkontakte/vk-bridge/dist/browser.min.js"></script>
-    
   </head>
 
   <body>
-    <!-- <div id="play">
+    <div id="play">
       <div
         id="button-play"
-        onclick="document.querySelector('#play').style.setProperty('visibility','hidden')"
+        onclick= "showGame()"
       >
         <div id="triangle">
           <div id="triangle-play"></div>
         </div>
       </div>
-    </div> -->
+      <div id = "play-text">Для игры на компьютере используй клавиши ⬆⬇⬅➡. Для игры на телефоне используй свайпы.</div>
+    </div>
     <div id="game-board">
       <div id="title-2048"></div>
       <div id="gameover">
@@ -74,7 +74,31 @@
       </div>
     </div>
     <script type="text/javascript">
+      console.log("WORKING...");
       getRecord();
+
+      function showGame() {
+        document.querySelector("#play").style.setProperty("visibility","hidden");
+        document.querySelector("#game-board").style.setProperty("opacity","100%");
+      }
+
+      function checkReklama() {
+        vkBridge
+          .send("VKWebAppCheckNativeAds", {
+            ad_format: "reward" /* Тип рекламы */,
+          })
+          .then((data) => {
+            if (data.result) {
+              console.log("Есть реклама для показа!!");
+            } else {
+              console.log("Нет рекламы для показа!!");
+              // Материалов нет
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
 
       function sendScoreSet() {
         vkBridge

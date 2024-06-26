@@ -52,8 +52,7 @@ export class Cell {
     // var t = 0;
     // document.querySelector("#record").textContent = t;
     if (
-      Number(document.querySelector("#record").textContent) <
-      Number(document.querySelector("#score").textContent)
+      Number(document.querySelector("#record").textContent) < Number(document.querySelector("#score").textContent)
     ) {
       document.querySelector("#record").textContent =
         document.querySelector("#score").textContent;
