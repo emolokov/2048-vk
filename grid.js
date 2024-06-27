@@ -23,12 +23,15 @@ export class Grid {
   }
 
   getRandomEmptyCell() {
+    console.log("Вызов getRandomEmptyCell");
+
     const emptyCells = this.cells.filter((cell) => cell.isEmpty());
     const randomIndex = Math.floor(Math.random() * emptyCells.length);
     return emptyCells[randomIndex];
   }
 
   groupCellsByColumn() {
+    console.log("Вызов groupCellsByColumn");
     return this.cells.reduce((groupedCells, cell) => {
       groupedCells[cell.x] = groupedCells[cell.x] || [];
       groupedCells[cell.x][cell.y] = cell;
@@ -37,6 +40,7 @@ export class Grid {
   }
 
   groupCellsByRow() {
+    console.log("Вызов groupCellsByRow");
     return this.cells.reduce((groupedCells, cell) => {
       groupedCells[cell.y] = groupedCells[cell.y] || [];
       groupedCells[cell.y][cell.x] = cell;

@@ -1,7 +1,6 @@
 import { Grid } from "./grid.js";
 import { Tile } from "./tile.js";
 
-// Отправляет событие инициализации нативному клиенту
 vkBridge.send("VKWebAppInit", {});
 const gameBoard = document.getElementById("game-board");
 
@@ -20,7 +19,6 @@ document
 let xDown = null,
   yDown = null;
 
-// Фиксируем изначальные координаты прикосновения
 function handleTouchStart(evt) {
   const { clientX, clientY } = evt.touches[0];
   xDown = clientX;
@@ -28,10 +26,10 @@ function handleTouchStart(evt) {
 }
 
 checkReklama();
-// Отслеживаем движение пальца и определяем направление свайпа
+
 function handleTouchMove(evt) {
   if (!xDown || !yDown) {
-    return; // Если изначальные координаты не зафиксированы, прекращаем выполнение
+    return; 
   }
 
   const { clientX, clientY } = evt.touches[0];
@@ -39,7 +37,6 @@ function handleTouchMove(evt) {
   const xDiff = xDown - clientX;
   const yDiff = yDown - clientY;
 
-  // Вычисляем, был ли свайп выполнен по горизонтали или вертикали
   if (Math.abs(xDiff) > Math.abs(yDiff)) {
     xDiff > 0
       ? document
@@ -64,11 +61,11 @@ function handleTouchMove(evt) {
           );
   }
 
-  // Обнуляем координатыhiuhhiugkji после распознавания свайпа
   xDown = yDown = null;
 }
 
 function setupInputOnce() {
+  console.log("Вызов setupInputOnce");
   window.addEventListener("keydown", handleInput, { once: true });
   window.addEventListener(
     "vector",
@@ -134,8 +131,8 @@ async function handleInput(event) {
   grid.getRandomEmptyCell().linkTile(newTile);
 
   if (!canMoveUp() && !canMoveDown() && !canMoveLeft() && !canMoveRight()) {
+    console.log("Не могу двигаться");
     await newTile.waitForAnimationEnd();
-    /*Insert gameover*/
     gameOver();
     return;
   }
@@ -151,7 +148,7 @@ async function vectorInput(vmove) {
 
         return;
       }
-      moveUp();
+      await moveUp();
       break;
     case "down":
       if (!canMoveDown()) {
@@ -159,7 +156,7 @@ async function vectorInput(vmove) {
 
         return;
       }
-      moveDown();
+      await moveDown();
       break;
     case "left":
       if (!canMoveLeft()) {
@@ -167,7 +164,7 @@ async function vectorInput(vmove) {
 
         return;
       }
-      moveLeft();
+      await moveLeft();
       break;
     case "right":
       if (!canMoveRight()) {
@@ -187,6 +184,7 @@ async function vectorInput(vmove) {
   grid.getRandomEmptyCell().linkTile(newTile);
 
   if (!canMoveUp() && !canMoveDown() && !canMoveLeft() && !canMoveRight()) {
+    console.log("Не можем двигаться");
     await newTile.waitForAnimationEnd();
     /*Insert gameover*/
     gameOver();
@@ -195,6 +193,7 @@ async function vectorInput(vmove) {
 
   setupInputOnce();
 }
+
 
 async function moveUp() {
   await slideTiles(grid.cellsGroupedByColumn);
@@ -213,6 +212,7 @@ async function moveRight() {
 }
 
 async function slideTiles(groupedCells) {
+  console.log("Вызов slideTiles");
   const promises = [];
 
   groupedCells.forEach((group) => slideTilesInGroup(group, promises));
@@ -224,6 +224,8 @@ async function slideTiles(groupedCells) {
 }
 
 function slideTilesInGroup(group, promises) {
+  console.log("Вызов slideTilesInGroup");
+  
   for (let i = 1; i < group.length; i++) {
     if (group[i].isEmpty()) {
       continue;
@@ -255,32 +257,28 @@ function slideTilesInGroup(group, promises) {
 }
 
 function canMoveUp() {
-  console.log(canMoveUp);
   return canMove(grid.cellsGroupedByColumn);
 }
 
 function canMoveDown() {
-  console.log(canMoveDown);
   return canMove(grid.cellsGroupedByReversedColumn);
 }
 
 function canMoveLeft() {
-  console.log(canMoveLeft);
   return canMove(grid.cellsGroupedByRow);
 }
 
 function canMoveRight() {
-  console.log(canMoveRight);
   return canMove(grid.cellsGroupedByReversedRow);
 }
 
 function canMove(groupedCells) {
-  console.log(canMove);
   return groupedCells.some((group) => canMoveInGroup(group));
 }
 
 function canMoveInGroup(group) {
-  console.log(canMoveInGroup);
+  console.log("Вызов canMoveInGroup");
+
   return group.some((cell, index) => {
     if (index === 0) {
       return false;
